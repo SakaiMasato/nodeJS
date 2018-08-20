@@ -39,6 +39,9 @@ app.get("/student/:id",function (req,resp) {
     resp.json({"flag":"false","msg":"no result"});
 
 });
+app.get("/callback",function (req,resp) {
+   resp.end("resdata(9999)");
+});
 app.post("/studentP",function(req,resp){
     var name = req.body.name;
     var age = req.body.age;

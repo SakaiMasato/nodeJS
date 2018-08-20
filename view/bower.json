@@ -1,0 +1,11 @@
+{
+  "name": "view",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

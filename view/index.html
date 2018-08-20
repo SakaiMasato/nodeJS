@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
+    <script src="js/angular/angular.min.js"></script>
+</head>
+<body ng-controller="MainCtrl as mainCtrl">
+<input type="button" value="send" class="btn btn-danger" ng-click="mainCtrl.btnClick()">send get request<br>
+{{student}}<br>
+<input type="button" value="send" class="btn btn-danger" ng-click="mainCtrl.post()">send post request<br>
+<!--get请求路由传参-->
+<input type="button" value="send" class="btn  btn-danger" ng-click="mainCtrl.getWithParams()">send request with parameters<br>
+<!--post请求body传参-->
+<input type="button" value="send" class="btn btn btn-danger" ng-click="mainCtrl.postWithParams()">send request with parameters</br>
+
+</body>
+<script>
+    myApp = angular.module("myApp",[]);
+    myApp.controller("MainCtrl",["$http","$scope",function($http,$scope){
+        this.btnClick = function(){
+            $http.get("/student").then(function (data) {
+                $scope.student = data.data;
+            });
+        };
+        this.post = function(){
+            $http.post("/student").then(function (data) {
+                $scope.student = data.data;
+            });
+        }
+        this.getWithParams = function () {
+            $http.get("/student/10").then(function(data){
+                $scope.student = data.data;
+            });
+        }
+        this.postWithParams = function(){
+            $http.post("/studentP",{"name":"tom","age":"1"}).then(function(data){
+                console.log(data.data);
+            });
+        }
+    }]);
+</script>
+</html>

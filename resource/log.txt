@@ -1,2 +1,2 @@
-this is a log fileFri Aug 17 2018 14:28:52 GMT+0800 (China Standard Time)
- Async
+
+hello nodeJS

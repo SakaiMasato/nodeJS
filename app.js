@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var fs = require("fs");
 
 var app = express();//实例化express对象
 app.use(bodyParser.json());
@@ -48,6 +49,14 @@ app.post("/studentP",function(req,resp){
     resp.send({"msg":name+age});
 });
 
+// multer nodejs处理文件需要引用multer模块，处理cookie需要cookie-parser模块
+var upload = require('./demo/upload.js');
+app.use(upload);
+app.get("/form",function (req,resp) {
+   resp.sendFile(path.join(__dirname,'view','form.html'));
+});
+
+
 //端口监听
 app.listen(8000,function (err) {
     if(err){
@@ -56,3 +65,4 @@ app.listen(8000,function (err) {
     }
     console.log('server starts successfully,the port is 8000');
 });
+

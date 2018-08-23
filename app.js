@@ -56,6 +56,12 @@ app.get("/form",function (req,resp) {
    resp.sendFile(path.join(__dirname,'view','form.html'));
 });
 
+var cookieParser = require('cookie-parser');
+var util = require("util");
+app.use(cookieParser());
+app.get('/cookies', function(req, resp) {
+    console.log("Cookies: " + util.inspect(req.cookies));
+})
 
 //端口监听
 app.listen(8000,function (err) {

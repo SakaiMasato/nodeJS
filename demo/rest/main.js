@@ -10,6 +10,7 @@ var server = app.listen(8000,function(err){
 
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
 });
+//用户列表
 app.get('/listUsers', function (req, res) {
     fs.readFile( __dirname + "/" + "user.json", 'utf8', function (err, data) {
         console.log( data );
@@ -27,32 +28,29 @@ var user = {
         "id": 4
     }
 };
-
-var readStream = fs.createReadStream(__dirname + "/" + "user.json");
-var writeStream = fs.createWriteStream(__dirname + "/" + "user.json");
-var data = ""
-readStream.on('data', function(chunk) {
-    data += chunk;
+app.get('/addUser', function (req, resp) {
+    let res = {};
+    let readContent = fs.readFileSync( __dirname + "/" + "user.json", 'utf8');
+    res = (readContent == null && readContent=="")?{}:JSON.parse(readContent);
+    res["user4"] = user;
+    fs.writeFileSync(__dirname + "/" + "user.json",JSON.stringify(res),"utf-8");
 });
-
-readStream.on('end',function(){
-    console.log(data);
+//用户详情
+app.get('/:id',(req,resp)=>{
+    let res = {};
+    let readContent = fs.readFileSync(__dirname + "/" + "user.json", 'utf8');
+    res = (readContent == null && readContent=="")?{}:JSON.parse(readContent);
+    let userFind = res["user"+req.params.id];
+    console.log(userFind);
+    resp.end(JSON.stringify(userFind));
 });
-writeStream.on('finish', function() {
-    console.log("写入完成。");
-});
-
-writeStream.on('error', function(err){
-    console.log(err.stack);
-});
-app.get('/addUser', function (req, res) {
-    // 读取已存在的数据
-    fs.readFile( __dirname + "/" + "user.json", 'utf8', function (err, data) {
-        data = JSON.parse( data );
-        data["user4"] = user["user4"];
-        console.log( data );
-        writeStream.write(data,"utf8");
-        res.end( JSON.stringify(data));
-    });
+app.get('/delUser/:id',(req,resp)=>{
+   let id = req.params.id;
+    let readContent = fs.readFileSync(__dirname + "/" + "user.json", 'utf8');
+    res = (readContent == null && readContent=="")?{}:JSON.parse(readContent);
+    delete res["user"+id];
+    console.log( res );
+    fs.writeFileSync(__dirname + "/" + "user.json",JSON.stringify(res),"utf-8");
+    resp.end( JSON.stringify(res));
 });
 

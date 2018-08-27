@@ -2,7 +2,7 @@ var fs = require("fs");
 var data = '';
 
 // 创建可读流
-var readerStream = fs.createReadStream('resource/log.txt');
+var readerStream = fs.createReadStream('../resource/log.txt');
 
 // 设置编码为 utf8。
 readerStream.setEncoding('UTF8');

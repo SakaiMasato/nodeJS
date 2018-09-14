@@ -1,0 +1,22 @@
+<!--/**-->
+ <!--* Promise实例有三种状态-->
+ <!--* 异步操作未完成(pending)-->
+ <!--* 异步操作成功(fulfilled)-->
+ <!--* 异步操作失败(rejected)-->
+ <!--*/-->
+<body>
+<a href="javascript: new Date().toLocaleTimeString();">click</a>
+</body>
+<script>
+    var preloadImage = function (path) {
+        return new Promise(function (resolve, reject) {
+            var image = new Image();
+            image.onload  = resolve;
+            image.onerror = reject;
+            image.src = path;
+        });
+    };
+    preloadImage('https://www.google.se/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png')
+        .then(function (e) { document.body.append(e.target) })
+        .then(function () { console.log('加载成功') })
+</script>
